@@ -23,7 +23,7 @@ DECLARE_STATS_GROUP(TEXT("UltraleapTracking"), STATGROUP_UltraleapTracking, STAT
 DECLARE_CYCLE_STAT(TEXT("Leap Game Input and Events"), STAT_LeapInputTick, STATGROUP_UltraleapTracking);
 DECLARE_CYCLE_STAT(TEXT("Leap BodyState Tick"), STAT_LeapBodyStateTick, STATGROUP_UltraleapTracking);
 
-#define START_IN_OPENXR 0
+#define START_IN_OPENXR 1
 
 #pragma region Utility
 // Function call Utility
