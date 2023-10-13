@@ -59,6 +59,21 @@ void FUltraleapAnimCustomDetailsPanel::CustomizeDetails(IDetailLayoutBuilder& De
 																						// this object is clicked
 				.Content()[	   // We create a new slate object inside our button.
 					SNew(STextBlock).Text(FText::FromString("Auto map!"))]];
+
+	CustomCategory.AddCustomRow(FText::FromString("Auto bone scaling category"))
+		.ValueContent()
+		.VAlign(VAlign_Center)	  // set vertical alignment to center
+		.MaxDesiredWidth(250)[	  // With this operator we declare a new slate object inside our widget row
+								  // In this case the slate object is a button
+			SNew(SButton)
+				.ToolTipText(FText::FromString("calc sizes "
+											   "calc sizes"))
+				.VAlign(VAlign_Center)
+				.OnClicked(this, &FUltraleapAnimCustomDetailsPanel::ClickedOnButton2)	// Binding the OnClick function we want to
+																						// execute when
+																						// this object is clicked
+				.Content()[	   // We create a new slate object inside our button.
+					SNew(STextBlock).Text(FText::FromString("Calc sizes!"))]];
 }
 
 bool FUltraleapAnimCustomDetailsPanel::HasValidAnimInstance()
@@ -88,6 +103,22 @@ FReply FUltraleapAnimCustomDetailsPanel::ClickedOnButton()
 			if (AnimInstance != nullptr)
 			{
 				AnimInstance->ExecuteAutoMapping();
+			}
+		}
+	}
+	return FReply::Handled();
+}
+FReply FUltraleapAnimCustomDetailsPanel::ClickedOnButton2()
+{
+	if (GEngine)
+	{
+		for (const TWeakObjectPtr<UObject>& Object : SelectedObjects)
+		{
+			UBodyStateAnimInstance* AnimInstance = Cast<UBodyStateAnimInstance>(Object.Get());
+
+			if (AnimInstance != nullptr)
+			{
+				AnimInstance->ExecuteCalcSizes();
 			}
 		}
 	}

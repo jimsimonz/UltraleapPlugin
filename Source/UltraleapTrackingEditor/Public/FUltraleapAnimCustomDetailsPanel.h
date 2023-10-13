@@ -34,4 +34,7 @@ public:
 
 	/* The code that fires when we click the "ChangeColor" button */
 	FReply ClickedOnButton();
+
+	/* The code that fires when we click the "ChangeColor" button */
+	FReply ClickedOnButton2();
 };

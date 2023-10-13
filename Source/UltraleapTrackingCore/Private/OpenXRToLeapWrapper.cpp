@@ -682,7 +682,7 @@ float FOpenXRToLeapWrapper::CalculatePinchStrength(const FLeapHandData& Hand, fl
 	// Compute the distance midpoints between the thumb and the each finger and find the smallest.
 	float MinDistanceSquared = TNumericLimits<float>::Max();
 	
-	int32 FingerIndex = 0;
+	/*int32 FingerIndex = 0;
 	for(const FLeapDigitData& Finger : Hand.Digits)
 	{
 		// skip 1
@@ -690,12 +690,15 @@ float FOpenXRToLeapWrapper::CalculatePinchStrength(const FLeapHandData& Hand, fl
 		{
 			FingerIndex++;
 			continue;
-		}
+		}*/
+	{
+		// index finger only
+		const FLeapDigitData& Finger = Hand.Digits[1];
 		FVector Diff = Finger.Distal.NextJoint - ThumbTipPosition;
 		float DistanceSquared = Diff.SizeSquared();
 		MinDistanceSquared = FMath::Min(DistanceSquared, MinDistanceSquared);
 	
-		FingerIndex++;
+		//FingerIndex++;
 	}
 
 	// Compute the pinch strength.

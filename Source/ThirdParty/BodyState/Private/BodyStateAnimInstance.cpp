@@ -1262,6 +1262,44 @@ void UBodyStateAnimInstance::ExecuteAutoMapping()
 
 #endif
 }
+void UBodyStateAnimInstance::ExecuteCalcSizes()
+{
+	// One hand mapping
+	if (AutoMapTarget != EBodyStateAutoRigType::BOTH_HANDS)
+	{
+		if (MappedBoneList.Num() > 0)
+		{
+			FMappedBoneAnimData& OneHandMap = MappedBoneList[0];
+			CalculateHandSize(OneHandMap, AutoMapTarget);
+		}
+	}
+	else
+	{
+		// Make two maps if missing
+		if (MappedBoneList.Num() > 1)
+		{
+			// Map one hand each
+			FMappedBoneAnimData& LeftHandMap = MappedBoneList[0];
+			FMappedBoneAnimData& RightHandMap = MappedBoneList[1];
+
+			CalculateHandSize(LeftHandMap, EBodyStateAutoRigType::HAND_LEFT);
+			CalculateHandSize(RightHandMap, EBodyStateAutoRigType::HAND_RIGHT);
+		}
+	}
+
+
+#if WITH_EDITOR
+	// this is what happens when the user clicks apply in the property previewer
+	PersonaUtils::CopyPropertiesToCDO(this);
+
+	FString Title("Ultraleap auto bone mapping");
+	FText TitleText = FText::FromString(*Title);
+	FString Message("calc sizes mapping succeeded! Compile to continue");
+
+	FMessageDialog::Open(EAppMsgType::Ok, FText::FromString(*Message), &TitleText);
+
+#endif
+}
 #if WITH_EDITOR
 void UBodyStateAnimInstance::PostEditChangeProperty(struct FPropertyChangedEvent& PropertyChangedEvent)
 {

@@ -346,6 +346,9 @@ public:
 	UFUNCTION()
 	void ExecuteAutoMapping();
 	
+	UFUNCTION()
+	void ExecuteCalcSizes();
+	
 	/** Multidevice configuration, Singular subscribes to a single device.
 	Combined subscribes to multiple devices combined into one device
 	*/
