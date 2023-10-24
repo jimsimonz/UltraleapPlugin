@@ -553,6 +553,26 @@ LEAP_TRACKING_EVENT* FOpenXRToLeapWrapper::GetFrame()
 	bool StatusLeft = HandTracker->GetAllKeypointStates(EControllerHand::Left, OutPositions[0], OutRotations[0], OutRadii[0]);
 	bool StatusRight = HandTracker->GetAllKeypointStates(EControllerHand::Right, OutPositions[1], OutRotations[1], OutRadii[1]);
 
+	if (StatusLeft)
+	{
+
+		const FTransform& TrackingToWorldTransform = XRTrackingSystem->GetTrackingToWorldTransform();
+		FVector Position = TrackingToWorldTransform.InverseTransformPosition(OutPositions[0][0]);
+		if (Position.IsNearlyZero())
+		{
+			StatusLeft = false;
+		}
+	}
+	if (StatusRight)
+	{
+		const FTransform& TrackingToWorldTransform = XRTrackingSystem->GetTrackingToWorldTransform();
+		FVector Position = TrackingToWorldTransform.InverseTransformPosition(OutPositions[1][0]);
+		
+		if (Position.IsNearlyZero())
+		{
+			StatusRight = false;
+		}
+	}
 	DummyLeapFrame.nHands = StatusLeft + StatusRight;
 	DummyLeapFrame.info.frame_id++;
 	UWorld* World = nullptr;
@@ -571,8 +591,7 @@ LEAP_TRACKING_EVENT* FOpenXRToLeapWrapper::GetFrame()
 	}
 
 	if (StatusLeft)
-	{
-		
+	{	
 		ConvertToLeapSpace(DummyLeapHands[0], OutPositions[0], OutRotations[0]);
 		// not tracking -> tracking = update hand IDs
 		if (!LeftHandVisible)
