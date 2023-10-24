@@ -553,6 +553,9 @@ LEAP_TRACKING_EVENT* FOpenXRToLeapWrapper::GetFrame()
 	bool StatusLeft = HandTracker->GetAllKeypointStates(EControllerHand::Left, OutPositions[0], OutRotations[0], OutRadii[0]);
 	bool StatusRight = HandTracker->GetAllKeypointStates(EControllerHand::Right, OutPositions[1], OutRotations[1], OutRadii[1]);
 
+
+	// comes through as zero root if not tracked
+	// detecting this means hands can be hidden when not tracked
 	if (StatusLeft)
 	{
 
