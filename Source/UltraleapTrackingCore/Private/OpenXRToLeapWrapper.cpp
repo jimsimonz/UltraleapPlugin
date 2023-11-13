@@ -68,6 +68,7 @@ LEAP_CONNECTION* FOpenXRToLeapWrapper::OpenConnection(LeapWrapperCallbackInterfa
 void FOpenXRToLeapWrapper::InitOpenXRHandTrackingModule()
 {
 	static FName SystemName(TEXT("OpenXR"));
+	static FName SystemNameOculus(TEXT("OculusXRHMD"));
 
 	if (!GEngine)
 	{
@@ -81,7 +82,7 @@ void FOpenXRToLeapWrapper::InitOpenXRHandTrackingModule()
 	
 		return;
 	}
-	if (GEngine->XRSystem->GetSystemName() == SystemName)
+	if (GEngine->XRSystem->GetSystemName() == SystemName )
 	{
 		XRTrackingSystem = GEngine->XRSystem.Get();
 	}
