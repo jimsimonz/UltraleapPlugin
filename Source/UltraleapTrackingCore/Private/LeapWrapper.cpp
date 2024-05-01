@@ -86,6 +86,7 @@ void FLeapWrapper::SetCallbackDelegate(const uint32_t DeviceID, LeapWrapperCallb
 LEAP_CONNECTION* FLeapWrapper::OpenConnection(LeapWrapperCallbackInterface* InCallbackDelegate, bool UseMultiDeviceMode)
 {
 	return nullptr;
+	#if 0
 	ConnectorCallbackDelegate = InCallbackDelegate;
 	// Don't use config for now
 	LEAP_CONNECTION_CONFIG Config = {0};
@@ -119,6 +120,7 @@ LEAP_CONNECTION* FLeapWrapper::OpenConnection(LeapWrapperCallbackInterface* InCa
 	}
 	
 	return &ConnectionHandle;
+	#endif
 }
 LeapWrapperCallbackInterface* FLeapWrapper::GetCallbackDelegateFromDeviceID(const uint32_t DeviceID)
 {
