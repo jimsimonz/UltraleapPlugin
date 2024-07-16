@@ -57,6 +57,15 @@ class ULeapBlueprintFunctionLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintCallable, Category = "Ultraleap Tracking Functions")
 	static float AngleBetweenVectors(const FVector& A, const FVector& B);
 
+
+	
+	/** For debugging purposes only */
+	UFUNCTION(BlueprintCallable, Category = "Ultraleap Tracking Functions")
+	static void AddFileToMediaStore(const FString& FilePath);
+
+	/** For debugging purposes only */
+	UFUNCTION(BlueprintCallable, Category = "Ultraleap Tracking Functions")
+	static void RemoveFileFromMediaStore(const FString& FilePath);
 	// Debug functions, remove completely when no longer needed
 	static void ShutdownLeap();
 

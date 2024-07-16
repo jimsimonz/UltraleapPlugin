@@ -119,6 +119,21 @@
 			}
 			}
 
+			public void AndroidThunkJava_AddFileToMediaStore(String Filename)
+			{
+			Intent scanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+			File file = new File(Filename);
+			Uri contentUri = Uri.fromFile(file);
+			scanIntent.setData(contentUri);
+			getApplicationContext().sendBroadcast(scanIntent);
+			}
+			public void AndroidThunkJava_RemoveFileFromMediaStore(String Filename)
+			{
+			File file = new File(Filename);
+			Uri contentUri = Uri.fromFile(file);
+			getContentResolver().delete(contentUri, null, null);
+			}
+
 		</insert>
 
 	</gameActivityClassAdditions>

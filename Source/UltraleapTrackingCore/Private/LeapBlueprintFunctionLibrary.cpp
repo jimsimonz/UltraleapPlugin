@@ -142,3 +142,56 @@ void ULeapBlueprintFunctionLibrary::UnbindTrackingServiceAndroid()
 	}
 #endif
 }
+void ULeapBlueprintFunctionLibrary::AddFileToMediaStore(const FString& FilePath)
+{
+#if PLATFORM_ANDROID
+	//  Unbind the tracking service
+	if (JNIEnv* Env = FAndroidApplication::GetJavaEnv())
+	{
+		static jmethodID Method = FJavaWrapper::FindMethod(Env, FJavaWrapper::GameActivityClassID,
+			"AndroidThunkJava_AddFileToMediaStore", "(Ljava/lang/String;)V", false);
+		if (Method)
+		{
+			UE_LOG(UltraleapTrackingLog, Log, TEXT("UltraleapTracking: calling AndroidThunkJava_AddFileToMediaStore"));
+			auto jFilePath = FJavaHelper::ToJavaString(Env, FilePath);
+			FJavaWrapper::CallVoidMethod(Env, FJavaWrapper::GameActivityThis, Method, *jFilePath);
+			if (Env->ExceptionCheck())
+			{
+				Env->ExceptionDescribe();
+				Env->ExceptionClear();
+			}
+		}
+		else
+		{
+			UE_LOG(UltraleapTrackingLog, Error, TEXT("UltraleapTracking: could not call AndroidThunkJava_AddFileToMediaStore invalid Method"));
+		}
+	}
+#endif
+}
+void ULeapBlueprintFunctionLibrary::RemoveFileFromMediaStore(const FString& FilePath)
+{
+#if PLATFORM_ANDROID
+	//  Unbind the tracking service
+	if (JNIEnv* Env = FAndroidApplication::GetJavaEnv())
+	{
+		static jmethodID Method = FJavaWrapper::FindMethod(
+			Env, FJavaWrapper::GameActivityClassID, "AndroidThunkJava_RemoveFileFromMediaStore", "(Ljava/lang/String;)V", false);
+		if (Method)
+		{
+			UE_LOG(UltraleapTrackingLog, Log, TEXT("UltraleapTracking: calling AndroidThunkJava_RemoveFileFromMediaStore"));
+			auto jFilePath = FJavaHelper::ToJavaString(Env, FilePath);
+			FJavaWrapper::CallVoidMethod(Env, FJavaWrapper::GameActivityThis, Method, *jFilePath);
+			if (Env->ExceptionCheck())
+			{
+				Env->ExceptionDescribe();
+				Env->ExceptionClear();
+			}
+		}
+		else
+		{
+			UE_LOG(UltraleapTrackingLog, Error,
+				TEXT("UltraleapTracking: could not call AndroidThunkJava_RemoveFileFromMediaStore invalid Method"));
+		}
+	}
+#endif
+}
