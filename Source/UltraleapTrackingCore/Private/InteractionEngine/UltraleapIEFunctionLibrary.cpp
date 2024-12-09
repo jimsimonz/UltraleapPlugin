@@ -9,6 +9,9 @@
 #include "UltraleapIEFunctionLibrary.h"
 
 #include "Engine/World.h"
+#if ENGINE_MAJOR_VERSION >= 5 && ENGINE_MINOR_VERSION >= 5
+#include "PhysicsEngine/SkeletalBodySetup.h"
+#endif
 
 TArray<USkeletalBodySetup*> UUltraleapIEFunctionLibrary::GetSkeletalBodySetups(UPhysicsAsset* PhysicsAsset)
 {
